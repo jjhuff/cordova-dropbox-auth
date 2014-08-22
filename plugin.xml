@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="net.mspin.DropboxAuth"
+    version="0.1.0">
+    
+    <name>Dropbox Auth</name>
+    <author>Justin Huff</author>
+    <description>
+        This plugin allows your application to use the Dropbox Auth
+    </description>
+    <keywords>Dropbox, Dropbox Auth</keywords>
+    <license>MIT</license>
+    <repo>https://github.com/jjhuff/cordova-dropbox-auth</repo>
+
+    <js-module src="www/dropbox-auth.js" name="DropboxAuth">
+        <clobbers target="window.DropboxAuth" />
+    </js-module>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <!-- android -->
+    <platform name="android">
+        <preference name="DROPBOX_KEY" />
+        <config-file target="config.xml" parent="/*">
+            <feature name="DropboxAuth">
+                <param name="android-package" value="net.mspin.DropboxAuth.DropboxAuth" />
+            </feature>
+        </config-file>
+        <!-- add to manifest -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <meta-data
+                android:name="net.mspin.DropboxAuth.DropboxKey"
+                android:value="$DROPBOX_KEY" />
+            <activity
+                android:name="com.dropbox.client2.android.AuthActivity"
+                android:launchMode="singleTask"
+                android:configChanges="orientation|keyboard">
+                <intent-filter>
+                <!-- Change this to be db- followed by your app key -->
+                <data android:scheme="db-$DROPBOX_KEY" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+              </intent-filter>
+            </activity>
+        </config-file>
+        <!-- add plugin class -->
+        <source-file src="src/android/DropboxAuth.java" target-dir="src/net/mspin/DropboxAuth" />
+        <!-- add Dropbox Sync API libs -->
+        <source-file src="src/android/dropbox-android-sdk-1.6.1.jar" target-dir="libs" />
+        <source-file src="src/android/bcprov-jdk16-146.jar" target-dir="libs" />
+        <source-file src="src/android/commons-logging-1.1.1.jar" target-dir="libs" />
+        <source-file src="src/android/httpclient-4.0.3.jar" target-dir="libs" />
+        <source-file src="src/android/httpcore-4.0.1.jar" target-dir="libs" />
+        <source-file src="src/android/httpmime-4.0.3.jar" target-dir="libs" />
+        <source-file src="src/android/json_simple-1.1.jar" target-dir="libs" />
+    </platform>
+    
+</plugin>
