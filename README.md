@@ -1,6 +1,6 @@
 # Install
 ```shell
-    cordova plugin add https://github.com/jjhuff/cordova-dropbox-auth --variable DROPBOX_KEY=<app_key>
+cordova plugin add https://github.com/jjhuff/cordova-dropbox-auth --variable DROPBOX_KEY=<app_key>
 ```
 
 # Usage
